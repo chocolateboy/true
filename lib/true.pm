@@ -5,7 +5,7 @@ use warnings;
 
 use B::Hooks::Parser;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub import {
     B::Hooks::Parser::inject('1;');
@@ -64,10 +64,9 @@ enables modern Perl features and conveniences and cleans up legacy Perl warts.
 
 =head3 import
 
-This method should be invoked from the C<import> method of a module that uses C<true>. It takes no arguments.
-
-The C<import> method inserts "1;" at the perl parser's current position. Code that uses
-this module solely on behalf of its caller can load C<true> without invoking it e.g.
+This method, which takes no arguments, should be invoked from the C<import> method of a module that
+uses C<true>. It inserts "1;" at the perl parser's current position. Code that uses
+this module solely on behalf of its caller can load C<true> without importing it e.g.
 
     use true (); # don't import
 
@@ -77,10 +76,10 @@ this module solely on behalf of its caller can load C<true> without invoking it 
 
     1;
 
-But there's nothing stopping a wrapper module also using C<true> to obviate its own need to
+But there's nothing stopping a wrapper module also importing C<true> to obviate its own need to
 explicitly return a true value:
 
-    use true; # both load and use it
+    use true; # both load and import it
 
     sub import {
         true->import();
@@ -94,14 +93,15 @@ None by default.
 
 =head1 CAVEATS
 
-No attempt is made to inject the true return value at the top-level of the currently-compiling file. Thus,
-modules that export C<true> should be used at the top-level e.g.
+The true return value is injected at the point where C<true> is imported. No attempt is made to inject it at
+the top-level of the currently-compiling file if C<true> is used in a nested scope. Thus, modules that export
+C<true> should be used at the top-level e.g.
 
 This works:
 
     package MyModule;
 
-    use Contemporary::Perl;
+    use Contemporary::Perl; # true value injected here
 
     # no need to return true
 
@@ -110,9 +110,9 @@ This doesn't:
     package MyModule;
 
     {
-        use Contemporary::Perl;
+        use Contemporary::Perl; # true value injected here
 
-        # true value injected here
+        # ...
     }
 
     # true value not injected here; error when the module is required

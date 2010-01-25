@@ -1,5 +1,8 @@
 Revision history for Perl extension true.
 
+0.03 Mon Jan 25 20:04:01 2010
+    - doc tweak
+
 0.02 Mon Jan 25 19:32:52 2010
     - POD fmt fix
     - add pod.t
