@@ -12,3 +12,4 @@ t/lib/Bad.pm
 t/lib/Contemporary/Perl.pm
 t/lib/good.pl
 t/lib/Good.pm
+t/pod.t

@@ -5,7 +5,7 @@ use warnings;
 
 use B::Hooks::Parser;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub import {
     B::Hooks::Parser::inject('1;');
@@ -92,7 +92,7 @@ explicitly return a true value:
 
 None by default.
 
-=head2 CAVEATS
+=head1 CAVEATS
 
 No attempt is made to inject the true return value at the top-level of the currently-compiling file. Thus,
 modules that export C<true> should be used at the top-level e.g.
