@@ -9,3 +9,8 @@ sub import {
     my $class = shift;
     $class->SUPER::import(@_);
 }
+
+sub unimport {
+    my $class = shift;
+    $class->SUPER::unimport(@_);
+}

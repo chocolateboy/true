@@ -29,7 +29,8 @@ WriteMakefile(
     NAME          => 'true',
     VERSION_FROM  => 'lib/true.pm',
     PREREQ_PM => {
-        %XS_PREREQUISITES
+        %XS_PREREQUISITES,
+        'Devel::StackTrace' => '1.22',
     },
     ABSTRACT_FROM => 'lib/true.pm',
     AUTHOR        => 'chocolateboy <chocolate@cpan.org>',

@@ -8,7 +8,7 @@ use B::Hooks::OP::Check;
 use Devel::StackTrace;
 use XSLoader;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 our %TRUE;
 
 XSLoader::load(__PACKAGE__, $VERSION);
@@ -26,20 +26,31 @@ sub ccfile() {
         last;
     }
 
+    if (defined($ccfile) && not(length($ccfile))) {
+        ($ccfile, $ccline) = (undef, undef);
+    }
+
     return wantarray ? ($ccfile, $ccline) : $ccfile;
 }
 
 sub import {
-    my $ccfile = ccfile();
+    my ($ccfile, $ccline) = ccfile();
 
-    if ($ccfile && not($TRUE{$ccfile})) {
+    if (defined($ccfile) && not($TRUE{$ccfile})) {
         $TRUE{$ccfile} = 1;
+        # warn "enabling true for $ccfile at line $ccline: ", pp(\%TRUE), $/;
         xs_enter();
     }
 }
 
 sub unimport {
-    die "not implemented!";
+    my ($ccfile, $ccline) = ccfile();
+
+    if (defined($ccfile) && $TRUE{$ccfile}) {
+        # warn "disabling true for $ccfile at line $ccline: ", pp(\%TRUE), $/;
+        delete $TRUE{$ccfile};
+        xs_leave() unless (%TRUE);
+    }
 }
 
 1;
@@ -87,11 +98,18 @@ or even:
     1; # Must end with this, because Perl is bogus.
 
 This module packages this "return true" behaviour so that it need not be written explicitly.
-It shouldn't be used directly, except, perhaps, for pedagogical purposes. Rather it is intended
-to be invoked from the C<import> method of a L<Modern::Perl|Modern::Perl>-style module that
-enables modern Perl features and conveniences and cleans up legacy Perl warts.
+It can be used directly, but it is intended to be invoked from the C<import> method of a
+L<Modern::Perl|Modern::Perl>-style module that enables modern Perl features and conveniences
+and cleans up legacy Perl warts.
 
 =head2 METHODS
+
+C<true> is file-scoped rather than lexically-scoped. Importing it anywhere in a
+file (e.g. at the top-level or in a nested scope) causes that file to return true,
+and unimporting it anywhere in a file restores the default behaviour. Duplicate imports/unimports
+are ignored.
+
+Note also that these methods are only useful at compile-time.
 
 =head3 import
 
@@ -117,6 +135,10 @@ explicitly return a true value:
     }
 
     # no need to return true
+
+=head3 unimport
+
+This method disables the "automatically return true" behaviour for the current file.
 
 =head2 EXPORT
 

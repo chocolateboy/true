@@ -14,7 +14,7 @@
 #define CxOLD_OP_TYPE(cx) (cx->blk_eval.old_op_type)
 #endif
 
-STATIC char * currently_compiling_file(pTHX);
+STATIC char * true_ccfile(pTHX);
 STATIC hook_op_check_id TRUE_CHECK_LEAVEEVAL_ID = 0;
 STATIC HV * TRUE_HASH = NULL;
 STATIC OPAnnotationGroup TRUE_ANNOTATIONS = NULL;
@@ -25,7 +25,7 @@ STATIC U32 true_enabled(pTHX_ const char *filename);
 STATIC void true_leave(pTHX);
 STATIC void true_unregister(pTHX_ const char *filename);
 
-STATIC char * currently_compiling_file(pTHX) {
+STATIC char * true_ccfile(pTHX) {
     return CopFILE(&PL_compiling);
 }
 
@@ -45,15 +45,17 @@ STATIC U32 true_enabled(pTHX_ const char * const filename) {
 }
 
 STATIC void true_unregister(pTHX_ const char *filename) {
+    /* warn("deleting %s\n", filename); */
     (void)hv_delete(TRUE_HASH, filename, (I32)strlen(filename), G_DISCARD);
 
     if (HvKEYS(TRUE_HASH) == 0) {
+        /* warn("hash is empty: disabling true\n"); */
         true_leave(aTHX);
     }
 }
 
 STATIC OP * true_check_leaveeval(pTHX_ OP * o, void * user_data) {
-    char * ccfile = currently_compiling_file(aTHX);
+    char * ccfile = true_ccfile(aTHX);
     PERL_UNUSED_VAR(user_data);
 
     if (true_enabled(aTHX_ ccfile)) {
@@ -69,16 +71,19 @@ STATIC OP * true_leaveeval(pTHX) {
     const PERL_CONTEXT * cx;
     SV ** newsp;
     OPAnnotation * annotation = op_annotation_get(TRUE_ANNOTATIONS, PL_op);
+    const char *filename = annotation->data;
 
     cx = &cxstack[cxstack_ix];
     newsp = PL_stack_base + cx->blk_oldsp;
 
-    if (CxOLD_OP_TYPE(cx) == OP_REQUIRE) {
+    /* make sure it hasn't been unimported */
+    if ((CxOLD_OP_TYPE(cx) == OP_REQUIRE) && true_enabled(aTHX_ filename))  {
         if (!(cx->blk_gimme == G_SCALAR ? SvTRUE(*SP) : SP > newsp)) {
             XPUSHs(&PL_sv_yes);
             PUTBACK;
         }
-        true_unregister(aTHX_ annotation->data);
+        /* warn("executed leaveeval for %s\n", filename); */
+        true_unregister(aTHX_ filename);
     }
 
     return CALL_FPTR(annotation->op_ppaddr)(aTHX);
@@ -104,9 +109,8 @@ void
 xs_enter()
     PROTOTYPE:
     CODE:
-        if (TRUE_COMPILING != 0) {
-            croak("true: scope overflow");
-        } else {
+        /* don't hook OP_LEAVEEVAL if it's already been hooked */
+        if (TRUE_COMPILING == 0) {
             TRUE_COMPILING = 1;
             TRUE_CHECK_LEAVEEVAL_ID = hook_op_check(OP_LEAVEEVAL, true_check_leaveeval, NULL);
         }

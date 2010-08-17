@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               true
-version:            0.10
+version:            0.11
 abstract:           automatically return a true value when a file is required
 author:
     - chocolateboy <chocolate@cpan.org>
@@ -16,6 +16,7 @@ build_requires:
 requires:
     B::Hooks::OP::Annotation:  0.43
     B::Hooks::OP::Check:  0.18
+    Devel::StackTrace:    1.22
 no_index:
     directory:
         - t

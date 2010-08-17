@@ -1,5 +1,12 @@
 Revision history for Perl extension true.
 
+0.11 Tue Aug 17 16:08:23 2010
+    - add missing dependency
+    - add support/documentation for unimport
+      - add unimport.t
+    - add leak.t
+    - doc tweakage
+
 0.10 Tue Aug 17 04:18:42 2010
     - rm caveats
     - more tests

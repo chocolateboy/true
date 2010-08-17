@@ -1,4 +1,4 @@
-true version 0.10
+true version 0.11
 ==============================
 
 automatically return a true value when a file is required
@@ -16,9 +16,10 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-    B::Hooks::OP::Annotation:  0.43
-    B::Hooks::OP::Check:  0.18
-    ExtUtils::Depends:    0.302
+    B::Hooks::OP::Annotation
+    B::Hooks::OP::Check
+    Devel::StackTrace
+    ExtUtils::Depends
 
 COPYRIGHT AND LICENCE
 

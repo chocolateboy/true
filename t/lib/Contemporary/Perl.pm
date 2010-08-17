@@ -10,4 +10,8 @@ sub import {
     true->import();
 }
 
+sub unimport {
+    true->unimport();
+}
+
 1;
