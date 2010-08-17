@@ -23,7 +23,7 @@ our %XS_PREREQUISITES = (
     'B::Hooks::OP::Check'      => '0.18',
 );
 
-our %XS_DEPENDENCIES = ExtUtils::Depends->new('mysubs', keys(%XS_PREREQUISITES))->get_makefile_vars();
+our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
 
 WriteMakefile(
     NAME          => 'true',

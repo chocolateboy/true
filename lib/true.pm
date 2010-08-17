@@ -8,11 +8,12 @@ use B::Hooks::OP::Check;
 use Devel::StackTrace;
 use XSLoader;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 our %TRUE;
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
+# XXX CopFILE(&PL_compiling) gives the wrong result here (it works in the OP checker in the XS)
 sub ccfile() {
     my ($ccfile, $ccline);
     my $trace = Devel::StackTrace->new;
@@ -33,6 +34,7 @@ sub ccfile() {
     return wantarray ? ($ccfile, $ccline) : $ccfile;
 }
 
+# XXX should add a debug option
 sub import {
     my ($ccfile, $ccline) = ccfile();
 
@@ -106,16 +108,14 @@ and cleans up legacy Perl warts.
 
 C<true> is file-scoped rather than lexically-scoped. Importing it anywhere in a
 file (e.g. at the top-level or in a nested scope) causes that file to return true,
-and unimporting it anywhere in a file restores the default behaviour. Duplicate imports/unimports
+and unimporting it anywhere in a file restores the default behaviour. Redundant imports/unimports
 are ignored.
-
-Note also that these methods are only useful at compile-time.
 
 =head3 import
 
-This method, which takes no arguments, should be invoked from the C<import> method of a module that
-loads C<true>. Code that uses this module solely on behalf of its caller can load C<true> without
-importing it e.g.
+Enable the "automatically return true" behaviour for the currently-compiling file. This should
+typically be invoked from the C<import> method of a module that loads C<true>. Code that uses
+this module solely on behalf of its callers can load C<true> without importing it e.g.
 
     use true (); # don't import
 
@@ -138,7 +138,7 @@ explicitly return a true value:
 
 =head3 unimport
 
-This method disables the "automatically return true" behaviour for the current file.
+Disable the "automatically return true" behaviour for the currently-compiling file.
 
 =head2 EXPORT
 

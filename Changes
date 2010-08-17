@@ -1,5 +1,9 @@
 Revision history for Perl extension true.
 
+0.12 Tue Aug 17 19:01:55 2010
+    - ExtUtils::Depends fix
+    - doc tweak
+
 0.11 Tue Aug 17 16:08:23 2010
     - add missing dependency
     - add support/documentation for unimport
