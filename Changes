@@ -1,5 +1,9 @@
 Revision history for Perl extension true.
 
+0.10 Tue Aug 17 04:18:42 2010
+    - rm caveats
+    - more tests
+
 0.03 Mon Jan 25 20:04:01 2010
     - doc tweak
 

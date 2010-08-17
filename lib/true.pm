@@ -3,12 +3,43 @@ package true;
 use strict;
 use warnings;
 
-use B::Hooks::Parser;
+use B::Hooks::OP::Annotation;
+use B::Hooks::OP::Check;
+use Devel::StackTrace;
+use XSLoader;
 
-our $VERSION = '0.03';
+our $VERSION = '0.10';
+our %TRUE;
+
+XSLoader::load(__PACKAGE__, $VERSION);
+
+sub ccfile() {
+    my ($ccfile, $ccline);
+    my $trace = Devel::StackTrace->new;
+
+    while (my $frame = $trace->next_frame) {
+        my $sub = $frame->subroutine;
+        next unless ($sub =~ /::BEGIN$/);
+        my $prev_frame = $trace->prev_frame;
+        $ccfile = $prev_frame->filename;
+        $ccline = $prev_frame->line;
+        last;
+    }
+
+    return wantarray ? ($ccfile, $ccline) : $ccfile;
+}
 
 sub import {
-    B::Hooks::Parser::inject('1;');
+    my $ccfile = ccfile();
+
+    if ($ccfile && not($TRUE{$ccfile})) {
+        $TRUE{$ccfile} = 1;
+        xs_enter();
+    }
+}
+
+sub unimport {
+    die "not implemented!";
 }
 
 1;
@@ -65,8 +96,8 @@ enables modern Perl features and conveniences and cleans up legacy Perl warts.
 =head3 import
 
 This method, which takes no arguments, should be invoked from the C<import> method of a module that
-uses C<true>. It inserts "1;" at the perl parser's current position. Code that uses
-this module solely on behalf of its caller can load C<true> without importing it e.g.
+loads C<true>. Code that uses this module solely on behalf of its caller can load C<true> without
+importing it e.g.
 
     use true (); # don't import
 
@@ -91,32 +122,6 @@ explicitly return a true value:
 
 None by default.
 
-=head1 CAVEATS
-
-The true return value is injected at the point where C<true> is imported. No attempt is made to inject it at
-the top-level of the currently-compiling file if C<true> is used in a nested scope. Thus, modules that export
-C<true> should be used at the top-level e.g.
-
-This works:
-
-    package MyModule;
-
-    use Contemporary::Perl; # true value injected here
-
-    # no need to return true
-
-This doesn't:
-
-    package MyModule;
-
-    {
-        use Contemporary::Perl; # true value injected here
-
-        # ...
-    }
-
-    # true value not injected here; error when the module is required
-
 =head1 SEE ALSO
 
 =over
@@ -126,6 +131,8 @@ This doesn't:
 =item * L<Toolkit|Toolkit>
 
 =item * L<latest|latest>
+
+=item * L<perl5i|perl5i>
 
 =item * L<uni::perl|uni::perl>
 
