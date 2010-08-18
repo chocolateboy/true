@@ -43,7 +43,11 @@ WriteMakefile(
             configure_requires => {
                 'ExtUtils::Depends' => '0.302',
                 %XS_PREREQUISITES
-            }})
+            },
+            resources => {
+                repository => 'http://github.com/chocolateboy/true',
+            },
+        })
         : ()
     ),
     ($ExtUtils::MakeMaker::VERSION >= 6.31 ? (LICENSE => 'perl') : ()),
