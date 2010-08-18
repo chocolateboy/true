@@ -28,7 +28,7 @@ sub ccfile() {
     while (my $frame = $trace->next_frame) {
         next unless ($frame->is_require);
         my $required = $frame->evaltext;
-        
+
         if (defined($file = $INC{$required})) {
             $source = $frame->filename;
             $line = $frame->line;
@@ -91,7 +91,7 @@ Perl's C<require> builtin (and its C<use> wrapper) requires the files it loads t
 This is usually accomplished by placing a single
 
     1;
-    
+
 statement at the end of included scripts or modules. It's not onerous to add but it's
 a speed bump on the Perl novice's road to enlightenment. In addition, it appears to be
 a I<non-sequitur> to the uninitiated, leading some to attempt to mitigate its appearance
@@ -102,7 +102,7 @@ with a comment:
 or:
 
     1; # Do not remove this line
-    
+
 or even:
 
     1; # Must end with this, because Perl is bogus.
