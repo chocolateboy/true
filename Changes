@@ -1,5 +1,12 @@
 Revision history for Perl extension true.
 
+0.13 Thu Jan 27 08:04:00 2011
+    - true.pm: more robust detection of the currently-compiling file
+        - should fix Windows failures - thanks, Alexandr Ciornii and Schwern
+    - eval.t: confirm string evals aren't affected
+    - clean up after compile-time exceptions: preliminary tests
+    - add repository link
+
 0.12 Tue Aug 17 19:01:55 2010
     - ExtUtils::Depends fix
     - doc tweak

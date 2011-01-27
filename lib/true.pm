@@ -8,7 +8,7 @@ use B::Hooks::OP::Check;
 use Devel::StackTrace;
 use XSLoader;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 our %TRUE;
 
 XSLoader::load(__PACKAGE__, $VERSION);
@@ -48,7 +48,7 @@ sub import {
 
     if (defined($file) && not($TRUE{$file})) {
         $TRUE{$file} = 1;
-        warn "true: enabling true for $file at $source line $line", $/;
+        # warn "true: enabling true for $file at $source line $line", $/;
         xs_enter();
     }
 }
@@ -57,7 +57,7 @@ sub unimport {
     my ($file, $source, $line) = ccfile();
 
     if (defined($file) && $TRUE{$file}) {
-        warn "true: disabling true for $file at $source line $line", $/;
+        # warn "true: disabling true for $file at $source line $line", $/;
         delete $TRUE{$file};
         xs_leave() unless (%TRUE);
     }
@@ -174,7 +174,7 @@ chocolateboy, E<lt>chocolate@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010 by chocolateboy
+Copyright (C) 2010-2011 by chocolateboy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,

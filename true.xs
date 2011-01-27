@@ -40,11 +40,11 @@ STATIC U32 true_enabled(pTHX_ const char * const filename) {
 }
 
 STATIC void true_unregister(pTHX_ const char * const filename) {
-    warn("true: deleting %s\n", filename);
+    /* warn("true: deleting %s\n", filename); */
     (void)hv_delete(TRUE_HASH, filename, strlen(filename), G_DISCARD);
 
     if (HvKEYS(TRUE_HASH) == 0) {
-        warn("true: hash is empty: disabling true\n");
+        /* warn("true: hash is empty: disabling true\n"); */
         true_leave(aTHX);
     }
 }

@@ -28,4 +28,3 @@ is_deeply \%true::TRUE, {}, 'direct: true cleans up correctly';
 eval 'use Ugly';
 is $@, '', 'use: Ugly using true';
 is Ugly::Ugly(), 'Ugly', 'use: Ugly loaded OK';
-
