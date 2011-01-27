@@ -8,8 +8,6 @@
 #include "hook_op_check.h"
 #include "hook_op_annotation.h"
 
-#define TRUE_KEY "true.pm"
-
 #ifndef CxOLD_OP_TYPE
 #define CxOLD_OP_TYPE(cx) (cx->blk_eval.old_op_type)
 #endif
