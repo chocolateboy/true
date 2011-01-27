@@ -156,13 +156,15 @@ None by default.
 
 =over
 
-=item * L<Modern::Perl|Modern::Perl>
-
-=item * L<Toolkit|Toolkit>
-
 =item * L<latest|latest>
 
+=item * L<Modern::Perl|Modern::Perl>
+
+=item * L<nonsense|nonsense>
+
 =item * L<perl5i|perl5i>
+
+=item * L<Toolkit|Toolkit>
 
 =item * L<uni::perl|uni::perl>
 
