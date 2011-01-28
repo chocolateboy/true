@@ -13,6 +13,7 @@ eval { require GoodWithSubclass };
 is $@, '', 'require: module using true';
 is GoodWithSubclass::Good(), 'GoodWithSubclass', 'require: module loaded OK';
 
+# test idempotence
 eval { require GoodWithSubSubclass };
 is $@, '', 'require: module using true';
 is GoodWithSubSubclass::Good(), 'GoodWithSubSubclass', 'require: module loaded OK';
