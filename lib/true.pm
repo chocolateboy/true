@@ -163,9 +163,8 @@ None by default.
 
 Because some versions of L<YAML::XS> may interpret the key of C<true>
 as a boolean, you may have trouble declaring a dependency on true.pm.
-You can instead declare a dependency on the package C<true::VERSION>
-which will have the same version as true.pm.
-
+You can work around this by declaring a dependency on the package C<true::VERSION>,
+which has the same version as true.pm.
 
 =head1 SEE ALSO
 

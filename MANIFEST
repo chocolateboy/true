@@ -40,4 +40,5 @@ t/require_subclass.t
 t/unimport.t
 t/use.t
 t/use_subclass.t
+t/version.t
 true.xs

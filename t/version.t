@@ -11,5 +11,5 @@ use lib (File::Spec->catdir($Bin, 'lib'));
 
 require true;
 
-ok $true::VERSION::VERSION,                     'true::VERSION exists';
-is $true::VERSION, $true::VERSION::VERSION,     '  same $VERSION as true';
+ok $true::VERSION::VERSION, 'true::VERSION exists';
+is $true::VERSION, $true::VERSION::VERSION, 'same $VERSION as true';
