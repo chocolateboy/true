@@ -8,7 +8,7 @@ use B::Hooks::OP::Check;
 use Devel::StackTrace;
 use XSLoader;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 our %TRUE;
 
 # Special package to help with dependencies.

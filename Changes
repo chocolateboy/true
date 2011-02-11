@@ -1,5 +1,8 @@
 Revision history for Perl extension true.
 
+0.14 Fri Feb 11 23:53:11 2011
+    - Create $true::VERSION::VERSION to work around a true dependency issue (thanks, Schwern)
+
 0.13 Thu Jan 27 08:04:00 2011
     - true.pm: more robust detection of the currently-compiling file
         - should fix Windows failures - thanks, Alexandr Ciornii and Schwern
