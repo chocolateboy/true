@@ -11,6 +11,13 @@ use XSLoader;
 our $VERSION = '0.13';
 our %TRUE;
 
+# Special package to help with dependencies.
+# See NOTES in the docs.
+{
+    package true::VERSION;
+    our $VERSION = $true::VERSION;
+}
+
 XSLoader::load(__PACKAGE__, $VERSION);
 
 # XXX CopFILE(&PL_compiling) gives the wrong result here (it works in the OP checker in the XS).
@@ -151,6 +158,14 @@ Disable the "automatically return true" behaviour for the currently-compiling fi
 =head2 EXPORT
 
 None by default.
+
+=head1 NOTES
+
+Because some versions of L<YAML::XS> may interpret the key of C<true>
+as a boolean, you may have trouble declaring a dependency on true.pm.
+You can instead declare a dependency on the package C<true::VERSION>
+which will have the same version as true.pm.
+
 
 =head1 SEE ALSO
 
