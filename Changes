@@ -1,5 +1,8 @@
 Revision history for Perl extension true.
 
+0.15 Mon Feb 14 14:37:14 2011
+    - Make true::VERSION a real module so dependency checkers can find it (thanks, Schwern)
+
 0.14 Fri Feb 11 23:53:11 2011
     - Create $true::VERSION::VERSION to work around a true dependency issue (thanks, Schwern)
 

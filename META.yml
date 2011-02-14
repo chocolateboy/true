@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               true
-version:            0.14
+version:            0.15
 abstract:           automatically return a true value when a file is required
 author:
     - chocolateboy <chocolate@cpan.org>
@@ -9,14 +9,14 @@ distribution_type:  module
 configure_requires:
     B::Hooks::OP::Annotation:  0.43
     B::Hooks::OP::Check:  0.18
-    ExtUtils::Depends:    0.302
+    ExtUtils::Depends:    0.304
     ExtUtils::MakeMaker:  0
 build_requires:
     ExtUtils::MakeMaker:  0
 requires:
     B::Hooks::OP::Annotation:  0.43
     B::Hooks::OP::Check:  0.18
-    Devel::StackTrace:    1.22
+    Devel::StackTrace:    1.27
 resources:
     repository:  http://github.com/chocolateboy/true
 no_index:
