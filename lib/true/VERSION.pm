@@ -2,7 +2,7 @@ package true::VERSION;
 
 require true;
 
-our $VERSION = $true::VERSION;
+our $VERSION = '0.16';
 
 =head1 NAME
 
@@ -16,6 +16,6 @@ prevent modules from depending on L<true>.
 Instead of depending on L<true>, depend on L<true::VERSION> with the
 same version number.
 
-This module was introduced with version 0.15 of L<true>.
+This module was introduced with version 0.16 of L<true>.
 
 =cut
