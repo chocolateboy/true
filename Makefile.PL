@@ -7,7 +7,6 @@ use ExtUtils::MakeMaker;
 use ExtUtils::Depends;
 use Config;
 use File::Copy 'copy';
-use File::stat;
 
 our $OPTIMIZE;
 
@@ -36,10 +35,6 @@ sub ensure_activeperl_dep_files_exist($) {
 
             next if !-f $maybe; # both files don't exist - either this one is elsewhere or we have a problem: next
 
-            my $time_want  = stat($want)->mtime;
-            my $time_maybe = stat($maybe)->mtime;
-
-            next if $time_maybe <= $time_want; # don't copy the .lib file to .a if it is older
             copy($maybe, $want); # .a is missing, but .lib exists, so just copy it over
         }
     }
