@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               true
-version:            0.16
+version:            0.17
 abstract:           automatically return a true value when a file is required
 author:
     - chocolateboy <chocolate@cpan.org>
@@ -23,7 +23,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.56
+generated_by:       ExtUtils::MakeMaker version 6.55_02
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

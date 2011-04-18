@@ -11,6 +11,40 @@ use File::stat;
 
 our $OPTIMIZE;
 
+sub ensure_activeperl_dep_files_exist($) {
+    return if $^O ne 'MSWin32';
+    return if $Config{make} !~ /dmake/;
+    return if $Config{cc} !~ /gcc/;
+    return if $Config{cf_email} !~ /ActiveState/;
+
+    my $libs = shift;
+    my @libs = split ' ', $libs;
+    my @dirs  = grep { /^-L.+/ } @libs;
+    my @files = grep { /^-l.+/ } @libs;
+
+    s/^-L// for @dirs;
+    s/^-l// for @files;
+
+    for my $dir (@dirs) {
+        for my $file (@files) {
+            my $base = "$dir/$file";
+            my $want = "$base.a";
+
+            next if -f $want; # everything OK, next
+
+            my $maybe = "$base.lib";
+
+            next if !-f $maybe; # both files don't exist - either this one is elsewhere or we have a problem: next
+
+            my $time_want  = stat($want)->mtime;
+            my $time_maybe = stat($maybe)->mtime;
+
+            next if $time_maybe <= $time_want; # don't copy the .lib file to .a if it is older
+            copy($maybe, $want); # .a is missing, but .lib exists, so just copy it over
+        }
+    }
+}
+
 if ($Config{gccversion}) {
     $OPTIMIZE = '-O3 -Wall -W';
     $OPTIMIZE .= ' -g -Wextra -Wdeclaration-after-statement' if (-d 'dev');
@@ -27,7 +61,7 @@ our %XS_PREREQUISITES = (
 
 our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
 
-ensure_activeperl_dep_files_exist( $XS_DEPENDENCIES{LIBS} );
+ensure_activeperl_dep_files_exist($XS_DEPENDENCIES{LIBS});
 
 WriteMakefile(
     NAME          => 'true',
@@ -42,7 +76,7 @@ WriteMakefile(
     DEFINE        => '',
     INC           => '-I.',
     OPTIMIZE      => $OPTIMIZE,
-    ($ExtUtils::MakeMaker::VERSION ge 6.46 ?
+    (eval($ExtUtils::MakeMaker::VERSION) >= 6.46 ?
         (META_MERGE => {
             configure_requires => {
                 'ExtUtils::Depends' => '0.304',
@@ -54,42 +88,6 @@ WriteMakefile(
         })
         : ()
     ),
-    ($ExtUtils::MakeMaker::VERSION ge 6.31 ? (LICENSE => 'perl') : ()),
+    (eval($ExtUtils::MakeMaker::VERSION) >= 6.31 ? (LICENSE => 'perl') : ()),
     %XS_DEPENDENCIES,
 );
-
-sub ensure_activeperl_dep_files_exist {
-	return if $^O ne 'MSWin32';
-	return if $Config{make} !~ /dmake/;
-	return if $Config{cc} !~ /gcc/;
-	return if $Config{cf_email} !~ /ActiveState/;
-
-	my ( $libs ) = @_;
-
-	my @libs = split ' ', $libs;
-
-	my @dirs = grep { /^-L.+/ } @libs;
-	my @files = grep { /^-l.+/ } @libs;
-
-	s/^-L// for @dirs;
-	s/^-l// for @files;
-
-	for my $dir ( @dirs ) {
-		for my $file ( @files ) {
-			my $base = "$dir/$file";
-			my $want = "$base.a";
-			next if -f $want; # everything ok, next
-
-			my $maybe = "$base.lib";
-			next if !-f $maybe; # both files don't exist, either this one is elsewhere or we have a problem, next
-
-			my $time_want = stat( $want )->mtime;
-			my $time_maybe = stat( $maybe )->mtime;
-			next if $time_maybe <= $time_want; # don't copy the .lib file to .a if it is older
-
-			copy( $maybe, $want ); # .a is missing, but .lib exists, so just copy it over
-		}
-	}
-
-	return;
-}
