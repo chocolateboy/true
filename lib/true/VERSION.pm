@@ -2,7 +2,7 @@ package true::VERSION;
 
 require true;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 =head1 NAME
 

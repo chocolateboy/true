@@ -8,7 +8,7 @@ use B::Hooks::OP::Check;
 use Devel::StackTrace;
 use XSLoader;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 our %TRUE;
 
 XSLoader::load(__PACKAGE__, $VERSION);

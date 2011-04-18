@@ -3,12 +3,28 @@ use 5.008001;
 use strict;
 use warnings;
 
-use ExtUtils::MakeMaker;
-use ExtUtils::Depends;
 use Config;
+use ExtUtils::Depends;
+use ExtUtils::MakeMaker;
 use File::Copy 'copy';
 
 our $OPTIMIZE;
+
+if ($Config{gccversion}) {
+    $OPTIMIZE = '-O3 -Wall -W';
+    $OPTIMIZE .= ' -g -Wextra -Wdeclaration-after-statement' if (-d 'dev');
+} elsif ($Config{osname} eq 'MSWin32') {
+    $OPTIMIZE = '-O2 -W4';
+} else {
+    $OPTIMIZE = $Config{optimize};
+}
+
+our %XS_PREREQUISITES = (
+    'B::Hooks::OP::Annotation' => '0.43',
+    'B::Hooks::OP::Check'      => '0.18',
+);
+
+our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
 
 sub ensure_activeperl_dep_files_exist($) {
     return if $^O ne 'MSWin32';
@@ -29,32 +45,16 @@ sub ensure_activeperl_dep_files_exist($) {
             my $base = "$dir/$file";
             my $want = "$base.a";
 
-            next if -f $want; # everything OK, next
+            next if -f $want; # everything OK: next
 
             my $maybe = "$base.lib";
 
-            next if !-f $maybe; # both files don't exist - either this one is elsewhere or we have a problem: next
+            next unless -f $maybe; # if neither file exists, either this one is elsewhere or we have a problem: next
 
             copy($maybe, $want); # .a is missing, but .lib exists, so just copy it over
         }
     }
 }
-
-if ($Config{gccversion}) {
-    $OPTIMIZE = '-O3 -Wall -W';
-    $OPTIMIZE .= ' -g -Wextra -Wdeclaration-after-statement' if (-d 'dev');
-} elsif ($Config{osname} eq 'MSWin32') {
-    $OPTIMIZE = '-O2 -W4';
-} else {
-    $OPTIMIZE = $Config{optimize};
-}
-
-our %XS_PREREQUISITES = (
-    'B::Hooks::OP::Annotation' => '0.43',
-    'B::Hooks::OP::Check'      => '0.18',
-);
-
-our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
 
 ensure_activeperl_dep_files_exist($XS_DEPENDENCIES{LIBS});
 

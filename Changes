@@ -1,5 +1,8 @@
 Revision history for Perl extension true.
 
+0.18 Mon Apr 18 19:23:37 2011
+    - fix EUMM workaround (Christian Walde)
+
 0.17 Mon Apr 18 17:47:49 2011
     - RT #65586: work around EUMM issue on ActivePerl (Christian Walde and Schwern)
     - Makefile.PL fix
