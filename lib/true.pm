@@ -154,10 +154,9 @@ None by default.
 
 =head1 NOTES
 
-Because some versions of L<YAML::XS> may interpret the key of C<true>
-as a boolean, you may have trouble declaring a dependency on true.pm.
-You can work around this by declaring a dependency on the package L<true::VERSION>,
-which has the same version as true.pm.
+Because the unquoted name C<true> represents the boolean value C<true> in YAML, the module name must be
+quoted when written as a dependency in META.yml. In cases where this can't easily be done,
+a dependency can be declared on the package L<true::VERSION>, which has the same version as C<true.pm>.
 
 =head1 SEE ALSO
 
