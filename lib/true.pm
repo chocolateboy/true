@@ -174,6 +174,10 @@ a dependency can be declared on the package L<true::VERSION>, which has the same
 
 =item * L<uni::perl|uni::perl>
 
+=item * L<anywhere>
+
+You can use this module to load C<true> for all of your modules.
+
 =back
 
 =head1 AUTHOR
