@@ -1,29 +1,30 @@
---- #YAML:1.0
-name:               true
-version:            0.18
-abstract:           automatically return a true value when a file is required
+---
+abstract: 'automatically return a true value when a file is required'
 author:
-    - chocolateboy <chocolate@cpan.org>
-license:            perl
-distribution_type:  module
-configure_requires:
-    B::Hooks::OP::Annotation:  0.43
-    B::Hooks::OP::Check:  0.18
-    ExtUtils::Depends:    0.304
-    ExtUtils::MakeMaker:  0
+  - 'chocolateboy <chocolate@cpan.org>'
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    B::Hooks::OP::Annotation:  0.43
-    B::Hooks::OP::Check:  0.18
-    Devel::StackTrace:    1.27
-resources:
-    repository:  http://github.com/chocolateboy/true
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.55_02
+  ExtUtils::MakeMaker: '0'
+configure_requires:
+  B::Hooks::OP::Annotation: '0.44'
+  B::Hooks::OP::Check: '0.19'
+  ExtUtils::Depends: '0.405'
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 7.18, CPAN::Meta::Converter version 2.143240'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: 'true'
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  B::Hooks::OP::Annotation: '0.44'
+  B::Hooks::OP::Check: '0.19'
+  Devel::StackTrace: '2.02'
+resources:
+  bugtracker: https://github.com/chocolateboy/true/issues
+  repository: https://github.com/chocolateboy/true
+version: '0.18'

@@ -20,8 +20,8 @@ if ($Config{gccversion}) {
 }
 
 our %XS_PREREQUISITES = (
-    'B::Hooks::OP::Annotation' => '0.43',
-    'B::Hooks::OP::Check'      => '0.18',
+    'B::Hooks::OP::Annotation' => '0.44',
+    'B::Hooks::OP::Check'      => '0.19',
 );
 
 our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
@@ -63,7 +63,7 @@ WriteMakefile(
     VERSION_FROM  => 'lib/true.pm',
     PREREQ_PM => {
         %XS_PREREQUISITES,
-        'Devel::StackTrace' => '1.27',
+        'Devel::StackTrace' => '2.02',
     },
     ABSTRACT_FROM => 'lib/true.pm',
     AUTHOR        => 'chocolateboy <chocolate@cpan.org>',
@@ -74,11 +74,12 @@ WriteMakefile(
     (eval($ExtUtils::MakeMaker::VERSION) >= 6.46 ?
         (META_MERGE => {
             configure_requires => {
-                'ExtUtils::Depends' => '0.304',
+                'ExtUtils::Depends' => '0.405',
                 %XS_PREREQUISITES
             },
             resources => {
-                repository => 'http://github.com/chocolateboy/true',
+                repository => 'https://github.com/chocolateboy/true',
+                bugtracker => 'https://github.com/chocolateboy/true/issues',
             },
         })
         : ()
