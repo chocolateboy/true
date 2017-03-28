@@ -71,6 +71,7 @@ WriteMakefile(
     DEFINE        => '',
     INC           => '-I.',
     OPTIMIZE      => $OPTIMIZE,
+    (eval($ExtUtils::MakeMaker::VERSION) >= 6.48 ? (MIN_PERL_VERSION => '5.008') : ()),
     (eval($ExtUtils::MakeMaker::VERSION) >= 6.46 ?
         (META_MERGE => {
             configure_requires => {

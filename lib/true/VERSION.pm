@@ -1,5 +1,8 @@
 package true::VERSION;
 
+use strict;
+use warnings;
+
 require true;
 
 our $VERSION = '0.18';
