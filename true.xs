@@ -64,7 +64,7 @@ STATIC OP * true_leaveeval(pTHX) {
     const PERL_CONTEXT * cx;
     SV ** newsp;
     OPAnnotation * annotation = op_annotation_get(TRUE_ANNOTATIONS, PL_op);
-    const char *filename = annotation->data;
+    const char * const filename = annotation->data;
 
     cx = &cxstack[cxstack_ix];
     newsp = PL_stack_base + cx->blk_oldsp;

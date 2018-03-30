@@ -26,6 +26,14 @@ our %XS_PREREQUISITES = (
 
 our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
 
+{
+    # try to diagnose build failure on Travis
+    use Data::Dumper ();
+    local $Data::Dumper::Indent = 1;
+    local $Data::Dumper::Terse = 1;
+    warn 'XXX XS_DEPENDENCIES: ', Data::Dumper::Dumper(\%XS_DEPENDENCIES), $/;
+}
+
 sub ensure_activeperl_dep_files_exist($) {
     return if $^O ne 'MSWin32';
     return if $Config{make} !~ /dmake/;
@@ -44,14 +52,17 @@ sub ensure_activeperl_dep_files_exist($) {
         for my $file (@files) {
             my $base = "$dir/$file";
             my $want = "$base.a";
-
-            next if -f $want; # everything OK: next
-
             my $maybe = "$base.lib";
 
-            next unless -f $maybe; # if neither file exists, either this one is elsewhere or we have a problem: next
+            # everything OK: next
+            next if -f $want;
 
-            copy($maybe, $want); # .a is missing, but .lib exists, so just copy it over
+            # if neither file exists, either this one is elsewhere
+            # or we have a problem: next
+            next unless -f $maybe;
+
+            # .a is missing, but .lib exists, so just copy it over
+            copy($maybe, $want);
         }
     }
 }
@@ -85,6 +96,6 @@ WriteMakefile(
         })
         : ()
     ),
-    (eval($ExtUtils::MakeMaker::VERSION) >= 6.31 ? (LICENSE => 'perl') : ()),
+    (eval($ExtUtils::MakeMaker::VERSION) >= 6.31 ? (LICENSE => 'artistic_2') : ()),
     %XS_DEPENDENCIES,
 );

@@ -186,7 +186,7 @@ chocolateboy, E<lt>chocolate@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2010-2017 by chocolateboy.
+Copyright (c) 2010-2018 by chocolateboy.
 
 This library is free software; you can redistribute it and/or modify it under the
 terms of the L<Artistic License 2.0|http://www.opensource.org/licenses/artistic-license-2.0.php>.
