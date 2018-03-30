@@ -148,7 +148,7 @@ explicitly return a true value:
 
 Disable the "automatically return true" behaviour for the currently-compiling file.
 
-=head2 EXPORT
+=head2 EXPORTS
 
 None by default.
 
@@ -157,6 +157,10 @@ None by default.
 Because the unquoted name C<true> represents the boolean value C<true> in YAML, the module name must be
 quoted when written as a dependency in META.yml. In cases where this can't easily be done,
 a dependency can be declared on the package L<true::VERSION>, which has the same version as C<true.pm>.
+
+=head1 VERSION
+
+0.18
 
 =head1 SEE ALSO
 
@@ -182,7 +186,7 @@ chocolateboy, E<lt>chocolate@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010-2017 by chocolateboy
+Copyright (c) 2010-2017 by chocolateboy.
 
 This library is free software; you can redistribute it and/or modify it under the
 terms of the L<Artistic License 2.0|http://www.opensource.org/licenses/artistic-license-2.0.php>.

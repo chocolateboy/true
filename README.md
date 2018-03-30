@@ -1,49 +1,53 @@
 # true
 
-[![CPAN version](https://badge.fury.io/pl/true.svg)](http://badge.fury.io/pl/true)
-[![build status](https://secure.travis-ci.org/chocolateboy/true.svg)](http://travis-ci.org/chocolateboy/true)
-
-automatically return a true value when a file is required
+[![Build Status](https://secure.travis-ci.org/chocolateboy/true.svg)](http://travis-ci.org/chocolateboy/true)
+[![CPAN Version](https://badge.fury.io/pl/true.svg)](http://badge.fury.io/pl/true)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [NAME](#name)
 - [SYNOPSIS](#synopsis)
 - [DESCRIPTION](#description)
-  - [METHODS](#methods)
-    - [import](#import)
-    - [unimport](#unimport)
-  - [EXPORT](#export)
+- [METHODS](#methods)
+  - [import](#import)
+  - [unimport](#unimport)
+- [EXPORTS](#exports)
 - [NOTES](#notes)
+- [VERSION](#version)
 - [SEE ALSO](#see-also)
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## SYNOPSIS
+# NAME
+
+true - automatically return a true value when a file is required
+
+# SYNOPSIS
 
 ```perl
-    package Contemporary::Perl;
+package Contemporary::Perl;
 
-    use strict;
-    use warnings;
-    use true;
+use strict;
+use warnings;
+use true;
 
-    sub import {
-        strict->import();
-        warnings->import();
-        true->import();
-    }
+sub import {
+    strict->import();
+    warnings->import();
+    true->import();
+}
 ```
 
-## DESCRIPTION
+# DESCRIPTION
 
 Perl's `require` builtin (and its `use` wrapper) requires the files it loads to return a true value.
 This is usually accomplished by placing a single
 
 ```perl
-    1;
+1;
 ```
 
 statement at the end of included scripts or modules. It's not onerous to add but it's
@@ -52,19 +56,19 @@ a _non-sequitur_ to the uninitiated, leading some to attempt to mitigate its app
 with a comment:
 
 ```perl
-    1; # keep require happy
+1; # keep require happy
 ```
 
 or:
 
 ```perl
-    1; # Do not remove this line
+1; # Do not remove this line
 ```
 
 or even:
 
 ```perl
-    1; # Must end with this, because Perl is bogus.
+1; # Must end with this, because Perl is bogus.
 ```
 
 This module packages this "return true" behaviour so that it need not be written explicitly.
@@ -72,72 +76,76 @@ It can be used directly, but it is intended to be invoked from the `import` meth
 [Modern::Perl](https://metacpan.org/pod/Modern::Perl)-style module that enables modern Perl features and conveniences
 and cleans up legacy Perl warts.
 
-### METHODS
+# METHODS
 
 `true` is file-scoped rather than lexically-scoped. Importing it anywhere in a
 file (e.g. at the top-level or in a nested scope) causes that file to return true,
 and unimporting it anywhere in a file restores the default behaviour. Redundant imports/unimports
 are ignored.
 
-#### import
+## import
 
 Enable the "automatically return true" behaviour for the currently-compiling file. This should
 typically be invoked from the `import` method of a module that loads `true`. Code that uses
 this module solely on behalf of its callers can load `true` without importing it e.g.
 
 ```perl
-    use true (); # don't import
+use true (); # don't import
 
-    sub import {
-        true->import();
-    }
+sub import {
+    true->import();
+}
 
-    1;
+1;
 ```
 
 But there's nothing stopping a wrapper module also importing `true` to obviate its own need to
 explicitly return a true value:
 
 ```perl
-    use true; # both load and import it
+use true; # both load and import it
 
-    sub import {
-        true->import();
-    }
+sub import {
+    true->import();
+}
 
-    # no need to return true
+# no need to return true
 ```
 
-#### unimport
+## unimport
 
 Disable the "automatically return true" behaviour for the currently-compiling file.
 
-### EXPORT
+# EXPORTS
 
 None by default.
 
-## NOTES
+# NOTES
 
 Because the unquoted name `true` represents the boolean value `true` in YAML, the module name must be
 quoted when written as a dependency in META.yml. In cases where this can't easily be done,
 a dependency can be declared on the package [true::VERSION](https://metacpan.org/pod/true::VERSION), which has the same version as `true.pm`.
 
-## SEE ALSO
+# VERSION
 
-- [latest](https://metacpan.org/pod/latest)
-- [Modern::Perl](https://metacpan.org/pod/Modern::Perl)
-- [nonsense](https://metacpan.org/pod/nonsense)
-- [perl5i](https://metacpan.org/pod/perl5i)
-- [Toolkit](https://metacpan.org/pod/Toolkit)
-- [uni::perl](https://metacpan.org/pod/uni::perl)
+0.18
 
-## AUTHOR
+# SEE ALSO
+
+* [latest](https://metacpan.org/pod/latest)
+* [Modern::Perl](https://metacpan.org/pod/Modern::Perl)
+* [nonsense](https://metacpan.org/pod/nonsense)
+* [perl5i](https://metacpan.org/pod/perl5i)
+* [Toolkit](https://metacpan.org/pod/Toolkit)
+* [uni::perl](https://metacpan.org/pod/uni::perl)
+
+# AUTHOR
 
 [chocolateboy](mailto:chocolate@cpan.org)
 
-## COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
-Copyright (C) 2010-2017 by chocolateboy
+Copyright © 2010-2017 by chocolateboy.
 
-This module is free software; you can redistribute it and/or modify it under the
-terms of the [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
+This is free software; you can redistribute it and/or modify it under the terms of the
+[Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
