@@ -21,7 +21,7 @@ if ($Config{gccversion}) {
 
 our %XS_PREREQUISITES = (
     'B::Hooks::OP::Annotation' => '0.44',
-    'B::Hooks::OP::Check'      => '0.19',
+    'B::Hooks::OP::Check'      => '0.22',
 );
 
 our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
@@ -63,7 +63,7 @@ WriteMakefile(
     VERSION_FROM  => 'lib/true.pm',
     PREREQ_PM => {
         %XS_PREREQUISITES,
-        'Devel::StackTrace' => '2.02',
+        'Devel::StackTrace' => '2.03',
     },
     ABSTRACT_FROM => 'lib/true.pm',
     AUTHOR        => 'chocolateboy <chocolate@cpan.org>',
