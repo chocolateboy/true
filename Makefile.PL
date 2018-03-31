@@ -26,14 +26,6 @@ our %XS_PREREQUISITES = (
 
 our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
 
-{
-    # try to diagnose build failure on Travis
-    use Data::Dumper ();
-    local $Data::Dumper::Indent = 1;
-    local $Data::Dumper::Terse = 1;
-    warn 'XXX XS_DEPENDENCIES: ', Data::Dumper::Dumper(\%XS_DEPENDENCIES), $/;
-}
-
 sub ensure_activeperl_dep_files_exist($) {
     return if $^O ne 'MSWin32';
     return if $Config{make} !~ /dmake/;
