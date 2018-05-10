@@ -188,6 +188,10 @@ L<true::VERSION>, which has the same version as C<true.pm>.
 
 =item * L<uni::perl|uni::perl>
 
+=item * L<anywhere>
+
+You can use this module to load C<true> for all of your modules.
+
 =back
 
 =head1 AUTHOR
