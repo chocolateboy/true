@@ -36,7 +36,6 @@ t/lib/UglyWithSubclass.pm
 t/lib/UglyWithSubSubclass.pm
 t/lib/Untrue1.pm
 t/lib/Untrue2.pm
-t/pod.t
 t/require.t
 t/require_subclass.t
 t/unimport.t
