@@ -186,8 +186,6 @@ L<true::VERSION>, which has the same version as C<true.pm>.
 
 =item * L<Toolkit|Toolkit>
 
-=item * L<uni::perl|uni::perl>
-
 =back
 
 =head1 AUTHOR

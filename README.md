@@ -137,7 +137,6 @@ a dependency can be declared on the package [true::VERSION](https://metacpan.org
 * [nonsense](https://metacpan.org/pod/nonsense)
 * [perl5i](https://metacpan.org/pod/perl5i)
 * [Toolkit](https://metacpan.org/pod/Toolkit)
-* [uni::perl](https://metacpan.org/pod/uni::perl)
 
 # AUTHOR
 
