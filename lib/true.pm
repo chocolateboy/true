@@ -11,12 +11,23 @@ use XSLoader;
 our $VERSION = '0.18';
 our %TRUE;
 
-my $DEBUG = $ENV{TRUE_PM_DEBUG};
+# set the logger from the first rule which matches the $TRUE_PM_DEBUG
+# environment variable:
+#
+#  - warn with a backtrace (cluck) if it's an integer > 1
+#  - warn (without a backtrace) if it's truthy
+#  - otherwise (default), do nothing
+#
+our $DEBUG = do {
+    my $debug = $ENV{TRUE_PM_DEBUG} || '0';
+    $debug = $debug =~ /^\d+$/ ? int($debug) : 1;
+    $debug && ($debug > 1 ? do { require Carp; \&Carp::cluck } : sub { warn(@_) });
+};
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
-sub _debug ($) {
-    warn(@_, $/) if ($DEBUG);
+sub _debug($) {
+    $DEBUG->(@_, $/) if ($DEBUG);
 }
 
 # return the full path of the file that's currently being compiled.
