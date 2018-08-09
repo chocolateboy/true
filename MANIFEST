@@ -9,7 +9,7 @@ ppport.h
 README
 t/01_compile.t
 t/eval.t
-t/exception.todo
+t/exception.t
 t/leak.t
 t/lib/bad.pl
 t/lib/Bad.pm

@@ -8,6 +8,7 @@ use ExtUtils::Depends;
 use ExtUtils::MakeMaker;
 use File::Copy 'copy';
 
+our $EUMM_VERSION = eval($ExtUtils::MakeMaker::VERSION);
 our $OPTIMIZE;
 
 if ($Config{gccversion}) {
@@ -24,7 +25,21 @@ our %XS_PREREQUISITES = (
     'B::Hooks::OP::Check'      => '0.22',
 );
 
-our %XS_DEPENDENCIES = ExtUtils::Depends->new('true', keys(%XS_PREREQUISITES))->get_makefile_vars();
+our %XS_DEPENDENCIES = ExtUtils::Depends->new(
+    'true',
+    keys(%XS_PREREQUISITES)
+)->get_makefile_vars();
+
+# test dependencies
+our %BUILD_REQUIRES;
+
+# Function::Parameters requires perl >= v5.14.0
+if ($] >= 5.014000) {
+    %BUILD_REQUIRES = (
+        # https://rt.cpan.org/Ticket/Display.html?id=124745
+        Moo => '2.003004', 'Function::Parameters' => '2.001003',
+    );
+}
 
 sub ensure_activeperl_dep_files_exist($) {
     return if $^O ne 'MSWin32';
@@ -61,7 +76,7 @@ sub ensure_activeperl_dep_files_exist($) {
 
 ensure_activeperl_dep_files_exist($XS_DEPENDENCIES{LIBS});
 
-WriteMakefile(
+my %META = (
     NAME          => 'true',
     VERSION_FROM  => 'lib/true.pm',
     PREREQ_PM => {
@@ -74,20 +89,34 @@ WriteMakefile(
     DEFINE        => '',
     INC           => '-I.',
     OPTIMIZE      => $OPTIMIZE,
-    (eval($ExtUtils::MakeMaker::VERSION) >= 6.48 ? (MIN_PERL_VERSION => '5.008') : ()),
-    (eval($ExtUtils::MakeMaker::VERSION) >= 6.46 ?
-        (META_MERGE => {
-            configure_requires => {
-                'ExtUtils::Depends' => '0.405',
-                %XS_PREREQUISITES
-            },
-            resources => {
-                repository => 'https://github.com/chocolateboy/true',
-                bugtracker => 'https://github.com/chocolateboy/true/issues',
-            },
-        })
-        : ()
-    ),
-    (eval($ExtUtils::MakeMaker::VERSION) >= 6.31 ? (LICENSE => 'artistic_2') : ()),
     %XS_DEPENDENCIES,
 );
+
+if ($EUMM_VERSION >= 6.55_03) {
+    $META{BUILD_REQUIRES} = \%BUILD_REQUIRES;
+} else {
+    $META{PREREQ_PM} = { %{ $META{PREREQ_PM} || {} }, %BUILD_REQUIRES };
+}
+
+if ($EUMM_VERSION >= 6.31) {
+    $META{LICENSE} = 'artistic_2';
+}
+
+if ($EUMM_VERSION >= 6.46) {
+    $META{META_MERGE} = {
+        configure_requires => {
+            'ExtUtils::Depends' => '0.405',
+            %XS_PREREQUISITES
+        },
+        resources => {
+            repository => 'https://github.com/chocolateboy/true',
+            bugtracker => 'https://github.com/chocolateboy/true/issues',
+        },
+    };
+}
+
+if ($EUMM_VERSION >= 6.48) {
+    $META{MIN_PERL_VERSION} = '5.008';
+}
+
+WriteMakefile(%META);
