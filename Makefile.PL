@@ -108,12 +108,21 @@ if ($EUMM_VERSION >= 6.46) {
             'ExtUtils::Depends' => '0.405',
             %XS_PREREQUISITES
         },
+        dynamic_config => 1, # [1]
         resources => {
             repository => 'https://github.com/chocolateboy/true',
             bugtracker => 'https://github.com/chocolateboy/true/issues',
         },
     };
 }
+
+# [1] make sure this script is always run (to correctly handle the
+# conditional test dependency on Function::Parameters). this avoids signaling to
+# clients that the static metadata in META.yml or META.json is sufficient for
+# every build
+#
+# http://blogs.perl.org/users/neilb/2017/04/an-introduction-to-distribution-metadata.html
+# https://github.com/Perl-Toolchain-Gang/CPAN-Meta/issues/112
 
 if ($EUMM_VERSION >= 6.48) {
     $META{MIN_PERL_VERSION} = '5.008';
