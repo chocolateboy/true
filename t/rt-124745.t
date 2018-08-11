@@ -21,10 +21,10 @@
 #         -> eval {...}
 #         -> Module::Runtime::require_module("RoleWithMethod")
 #
-# the error doesn't occur if the module is `require`d.
-# the error doesn't occur on perl v5.24 and above.
-# the error doesn't occur if returning true is forced (in the XS) in cases where
-# the value is already truthy.
+# - the error doesn't occur if the module is `require`d.
+# - the error doesn't occur on perl v5.24 and above.
+# - the error doesn't occur if returning true is forced (in the XS) in cases
+#   where the value is already truthy.
 #
 # [1] https://rt.cpan.org/Public/Bug/Display.html?id=124745
 
