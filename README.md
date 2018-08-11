@@ -71,7 +71,7 @@ or even:
 1; # Must end with this, because Perl is bogus.
 ```
 
-This module packages this "return true" behaviour so that it need not be written explicitly.
+This module packages this "return true" behaviour so that it doesn't need to be written explicitly.
 It can be used directly, but it is intended to be invoked from the `import` method of a
 [Modern::Perl](https://metacpan.org/pod/Modern::Perl)-style module that enables modern Perl features and conveniences
 and cleans up legacy Perl warts.
