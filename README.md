@@ -128,7 +128,7 @@ a dependency can be declared on the package [true::VERSION](https://metacpan.org
 
 # VERSION
 
-1.0.0
+1.0.1
 
 # SEE ALSO
 

@@ -10,7 +10,7 @@ use XSLoader;
 
 # XXX this declaration must be on a single line
 # https://metacpan.org/pod/version#How-to-declare()-a-dotted-decimal-version
-use version 0.77; our $VERSION = version->declare('v1.0.0');
+use version 0.77; our $VERSION = version->declare('v1.0.1');
 
 our %TRUE;
 
@@ -184,7 +184,7 @@ L<true::VERSION>, which has the same version as C<true.pm>.
 
 =head1 VERSION
 
-1.0.0
+1.0.1
 
 =head1 SEE ALSO
 

@@ -30,6 +30,7 @@ t/lib/IndirectCompileTimeException.pm
 t/lib/IndirectNestedUnimport.pm
 t/lib/IndirectTopLevelUnimport.pm
 t/lib/IndirectTrueLoadUntrue.pm
+t/lib/RoleWithMethod.pm
 t/lib/TestSubclass.pm
 t/lib/Ugly.pm
 t/lib/UglyWithSubclass.pm
@@ -38,6 +39,7 @@ t/lib/Untrue1.pm
 t/lib/Untrue2.pm
 t/require.t
 t/require_subclass.t
+t/rt-124745.t
 t/unimport.t
 t/use.t
 t/use_subclass.t
