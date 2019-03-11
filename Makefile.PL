@@ -37,7 +37,8 @@ our %BUILD_REQUIRES;
 if ($] >= 5.014000) {
     %BUILD_REQUIRES = (
         # https://rt.cpan.org/Ticket/Display.html?id=124745
-        Moo => '2.003004', 'Function::Parameters' => '2.001003',
+        'Moo'                  => '2.003004',
+        'Function::Parameters' => '2.001003',
     );
 }
 
@@ -92,12 +93,6 @@ my %META = (
     %XS_DEPENDENCIES,
 );
 
-if ($EUMM_VERSION >= 6.55_03) {
-    $META{BUILD_REQUIRES} = \%BUILD_REQUIRES;
-} else {
-    $META{PREREQ_PM} = { %{ $META{PREREQ_PM} || {} }, %BUILD_REQUIRES };
-}
-
 if ($EUMM_VERSION >= 6.31) {
     $META{LICENSE} = 'artistic_2';
 }
@@ -126,6 +121,12 @@ if ($EUMM_VERSION >= 6.46) {
 
 if ($EUMM_VERSION >= 6.48) {
     $META{MIN_PERL_VERSION} = '5.008';
+}
+
+if ($EUMM_VERSION >= 6.55_03) {
+    $META{BUILD_REQUIRES} = \%BUILD_REQUIRES;
+} else {
+    $META{PREREQ_PM} = { %{ $META{PREREQ_PM} || {} }, %BUILD_REQUIRES };
 }
 
 WriteMakefile(%META);
