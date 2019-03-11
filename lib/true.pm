@@ -8,7 +8,10 @@ use B::Hooks::OP::Check;
 use Devel::StackTrace;
 use XSLoader;
 
-our $VERSION = '0.18';
+# XXX this declaration must be on a single line
+# https://metacpan.org/pod/version#How-to-declare()-a-dotted-decimal-version
+use version 0.77; our $VERSION = version->declare('v1.0.0');
+
 our %TRUE;
 
 # set the logger from the first rule which matches the $TRUE_PM_DEBUG
@@ -181,31 +184,31 @@ L<true::VERSION>, which has the same version as C<true.pm>.
 
 =head1 VERSION
 
-0.18
+1.0.0
 
 =head1 SEE ALSO
 
 =over
 
-=item * L<latest|latest>
+=item * L<latest>
 
-=item * L<Modern::Perl|Modern::Perl>
+=item * L<Modern::Perl>
 
-=item * L<nonsense|nonsense>
+=item * L<nonsense>
 
-=item * L<perl5i|perl5i>
+=item * L<perl5i>
 
-=item * L<Toolkit|Toolkit>
+=item * L<Toolkit>
 
 =back
 
 =head1 AUTHOR
 
-chocolateboy, E<lt>chocolate@cpan.orgE<gt>
+chocolateboy <chocolate@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2010-2018 by chocolateboy.
+Copyright (c) 2010-2019 by chocolateboy.
 
 This library is free software; you can redistribute it and/or modify it under the
 terms of the L<Artistic License 2.0|http://www.opensource.org/licenses/artistic-license-2.0.php>.

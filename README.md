@@ -128,7 +128,7 @@ a dependency can be declared on the package [true::VERSION](https://metacpan.org
 
 # VERSION
 
-0.18
+1.0.0
 
 # SEE ALSO
 
@@ -144,7 +144,7 @@ a dependency can be declared on the package [true::VERSION](https://metacpan.org
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2010-2018 by chocolateboy.
+Copyright © 2010-2019 by chocolateboy.
 
 This is free software; you can redistribute it and/or modify it under the terms of the
 [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).

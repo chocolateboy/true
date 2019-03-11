@@ -5,7 +5,9 @@ use warnings;
 
 require true;
 
-our $VERSION = '0.18';
+# XXX this declaration must be on a single line
+# https://metacpan.org/pod/version#How-to-declare()-a-dotted-decimal-version
+use version 0.77; our $VERSION = version->declare('v1.0.0');
 
 =head1 NAME
 
