@@ -94,45 +94,49 @@ STATIC OP * true_leaveeval(pTHX) {
     const PERL_CONTEXT * cx = CX_CUR();
     OPAnnotation * annotation = op_annotation_get(TRUE_ANNOTATIONS, PL_op);
     const char * const filename = annotation->data;
-    bool returns_true = FALSE;
-
-#if (PERL_BCDVERSION >= 0x5024000)
-    SV ** oldsp = PL_stack_base + cx->blk_oldsp;
-#endif
+    bool module_returns_true;
 
     /* make sure it hasn't been unimported */
-    if ((CxOLD_OP_TYPE(cx) == OP_REQUIRE) && true_enabled(aTHX_ filename))  {
+    bool enabled = (CxOLD_OP_TYPE(cx) == OP_REQUIRE) && true_enabled(aTHX_ filename);
 
-#if (PERL_BCDVERSION >= 0x5024000)
-        /*
-         * on perl < 5.24, forcibly return true regardless of whether or not
-         * it's needed (i.e. don't run this check to see if the module has
-         * returned true).
-         *
-         * XXX this is a hack to fix RT-124745 [1]. it's no longer needed on
-         * perl >= 5.24
-         *
-         * [1] https://rt.cpan.org/Public/Bug/Display.html?id=124745
-         */
+    if (!enabled) {
+        goto done;
+    }
+
+#if (PERL_BCDVERSION < 0x5024000)
+    /*
+     * on perl < 5.24, forcibly return true regardless of whether or not it's
+     * needed (i.e. don't check to see if the module has returned true).
+     *
+     * XXX this is a hack to fix RT-124745 [1]. it's no longer needed on perl >=
+     * 5.24
+     *
+     * [1] https://rt.cpan.org/Public/Bug/Display.html?id=124745
+     */
+    module_returns_true = FALSE;
+#else
+    {
+        SV ** oldsp;
 
         /* XXX is the context ever not scalar? */
         if (cx->blk_gimme == G_SCALAR) {
-            /* sv_dump(*SP); */
-            returns_true = SvTRUE_NN(*SP);
+            module_returns_true = SvTRUE_NN(*SP);
         } else {
-            returns_true = SP > oldsp;
+            oldsp = PL_stack_base + cx->blk_oldsp;
+            module_returns_true = SP > oldsp;
         }
+    }
 #endif
 
-        if (!returns_true) {
-            XPUSHs(&PL_sv_yes);
-            PUTBACK;
-        }
-
-        true_unregister(aTHX_ filename);
+    if (!module_returns_true) {
+        XPUSHs(&PL_sv_yes);
+        PUTBACK;
     }
 
-    return annotation->op_ppaddr(aTHX);
+    true_unregister(aTHX_ filename);
+
+    done:
+        return annotation->op_ppaddr(aTHX);
 }
 
 MODULE = true                PACKAGE = true
