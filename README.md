@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/chocolateboy/true.svg)](https://travis-ci.org/chocolateboy/true)
 [![CPAN Version](https://badge.fury.io/pl/true.svg)](https://metacpan.org/pod/true)
 
-<!-- toc -->
+<!-- TOC -->
 
 - [NAME](#name)
 - [SYNOPSIS](#synopsis)
@@ -18,7 +18,7 @@
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
 
-<!-- tocstop -->
+<!-- TOC END -->
 
 # NAME
 
@@ -132,7 +132,7 @@ same version as `true.pm`.
 
 # VERSION
 
-1.0.1
+1.0.2
 
 # SEE ALSO
 

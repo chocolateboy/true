@@ -1,9 +1,8 @@
 Revision history for Perl extension true.
 
-1.0.2 TBD
+1.0.2 2020-11-10
 
     - code cleanup
-    - documentation tweaks
     - update ppport.h from 3.44 -> 3.62
 
 1.0.1 2019-03-11
