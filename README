@@ -20,10 +20,11 @@ This module requires these other modules and libraries:
     B::Hooks::OP::Check
     Devel::StackTrace
     ExtUtils::Depends
+    version
 
 COPYRIGHT AND LICENCE
 
-Copyright (c) 2010-2020 by chocolateboy.
+Copyright (c) 2010-2021 by chocolateboy.
 
 This is free software; you can redistribute it and/or modify it under the
 terms of the Artistic License 2.0.

@@ -31,11 +31,16 @@ our %XS_DEPENDENCIES = ExtUtils::Depends->new(
 )->get_makefile_vars();
 
 # test dependencies
-our %BUILD_REQUIRES;
+
+our %TEST_REQUIRES = (
+     # perl 5.8's Test::More doesn't support `subtest`
+    'Test::Simple' => '1.302183',
+);
 
 # Function::Parameters requires perl >= v5.14.0
 if ($] >= 5.014000) {
-    %BUILD_REQUIRES = (
+    %TEST_REQUIRES = (
+        %TEST_REQUIRES,
         # https://rt.cpan.org/Ticket/Display.html?id=124745
         'Moo'                  => '2.003004',
         'Function::Parameters' => '2.001003',
@@ -83,6 +88,7 @@ my %META = (
     PREREQ_PM => {
         %XS_PREREQUISITES,
         'Devel::StackTrace' => '2.03',
+        'version'           => '0.77',
     },
     ABSTRACT_FROM => 'lib/true.pm',
     AUTHOR        => 'chocolateboy <chocolate@cpan.org>',
@@ -123,10 +129,12 @@ if ($EUMM_VERSION >= 6.48) {
     $META{MIN_PERL_VERSION} = '5.008';
 }
 
-if ($EUMM_VERSION >= 6.55_03) {
-    $META{BUILD_REQUIRES} = \%BUILD_REQUIRES;
+if ($EUMM_VERSION >= 6.64) {
+    $META{TEST_REQUIRES} = \%TEST_REQUIRES;
+} elsif ($EUMM_VERSION >= 6.55_03) {
+    $META{BUILD_REQUIRES} = \%TEST_REQUIRES;
 } else {
-    $META{PREREQ_PM} = { %{ $META{PREREQ_PM} || {} }, %BUILD_REQUIRES };
+    $META{PREREQ_PM} = { %{ $META{PREREQ_PM} || {} }, %TEST_REQUIRES };
 }
 
 WriteMakefile(%META);

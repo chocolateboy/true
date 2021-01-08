@@ -1,6 +1,6 @@
 # true
 
-[![Build Status](https://travis-ci.org/chocolateboy/true.svg)](https://travis-ci.org/chocolateboy/true)
+[![Build Status](https://github.com/chocolateboy/true/workflows/test/badge.svg)](https://github.com/chocolateboy/true/actions?query=workflow%3Atest)
 [![CPAN Version](https://badge.fury.io/pl/true.svg)](https://metacpan.org/pod/true)
 
 <!-- TOC -->
@@ -148,7 +148,7 @@ same version as `true.pm`.
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2010-2020 by chocolateboy.
+Copyright © 2010-2021 by chocolateboy.
 
 This is free software; you can redistribute it and/or modify it under the terms of the
 [Artistic License 2.0](https://www.opensource.org/licenses/artistic-license-2.0.php).
